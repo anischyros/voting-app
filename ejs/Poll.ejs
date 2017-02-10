@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Make your opinion known</title>
+    <meta charset="UTF-8" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+    <script src="http://d3js.org/d3.v3.min.js"></script>
+    <script src="/poll.js"></script>
+    <script src="/graph.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+
+    <style>
+    body {
+        font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+        position: relative;
+    }
+
+    svg {
+        width: 100%;
+        height: 100%;
+        position: center;
+    }
+
+    text {
+        font: 12px sans-serif;
+        color: white;
+    }
+    text.value {
+        font-size: 120%;
+        fill: white;
+    }
+
+    .axisHorizontal path{
+        fill: none;
+    }
+
+    .axisHorizontal .tick line {
+        stroke-width: 1;
+        stroke: rgba(0, 0, 0, 0.2);
+    }
+
+    .bar {
+        fill: steelblue;
+        fill-opacity: .9;
+    }
+
+	#poll-panel
+	{
+		width: 500px;
+		margin-left: auto;
+		margin-right: auto;
+	}
+    </style>
+
+</head>
+<body>
+    <div id="login-panel" class="well">
+<% if (loggedIn) 
+   { %>
+        <span id="welcome-text">
+            Welcome, <%= login %></span><br />
+        <a href="/logout" id="logout-link">
+            Logout</a><br /><br />
+<% } %>
+		<a href="/">Return to main page</a>
+    </div>
+
+    <h2 class="text-center">Make your opinion known!</h2>
+
+	<div id="poll-panel" class="panel panel-default">
+		<div class="panel-heading">
+			<h2><%= pollName %></h2>
+		</div>
+		<div class="panel-body">
+			<form id="options-form" method="GET" action="/submitPollChoice">
+				<input type="hidden" name="poll-name" 
+					value="<%= pollName %>" />
+				<input type="hidden" name="polls-id" value="<%= pollsId %>" />
+				<table>
+<% for (var i = 0; i < choices.length; i++)
+   { %>
+					<tr><td>
+						<input type="radio" name="choice" 
+							value="<%= encodeURIComponent(choices[i]) %>" />
+						<%= choices[i] %>
+					</td></tr>
+<% } %>
+				</table>
+		</div>
+		<div class="panel-footer">
+				<input type="submit" value="Vote" />
+		</div>
+			</form>
+	</div>
+
+	<div id="buttons-panel" class="text-center">
+<% if (login === pollCreator)
+   { %>
+		<button id="add-option-button" type="button" onclick="addNewChoice()">
+			Add New Option</button>
+		<button type="button" 
+			onclick="deletePoll('<%= encodeURIComponent(pollName) %>')">
+			Delete this poll</button>
+		<button type="button" type="button" 
+			onClick="showGraph('<%= encodeURIComponent(pollName) %>')">
+			Show graph</button>
+<% } %>
+	</div>
+
+<div id="add-choice-panel" title="Add new choice to poll" 
+	style="display: none">
+<form>
+	<input id="polls-id-field" type="hidden" name="polls-id" 
+		value="<%= pollsId %>" />
+	<label for="choice-name-name">New option</label>
+	<input id="choice-name-field" type="text" name="choice-name" />
+</form>
+</div>
+
+<div id="graph" title="Statistics for '<%= pollName %>'"></div>
+
+</body>
+</html>
+

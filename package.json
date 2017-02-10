@@ -1,0 +1,27 @@
+{
+  "name": "voting-app",
+  "version": "1.0.0",
+  "description": "FreeCodeCamp voting app implementation",
+  "main": "server/index.js",
+  "scripts": {
+    "test": "nodejs server/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anischyros/voting-app.git"
+  },
+  "author": "Bob Sutton",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anischyros/voting-app/issues"
+  },
+  "homepage": "https://github.com/anischyros/voting-app#readme",
+  "dependencies": {
+    "connect": "^3.5.0",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-alpha.2",
+    "ejs": "^2.5.5",
+    "express": "^4.14.1",
+    "mongodb": "^2.2.22"
+  }
+}

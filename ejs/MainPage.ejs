@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>Make your opinion known</title>
+	<meta charset="UTF-8" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.0/jquery-ui.min.js"></script>
+	<script src="/main.js"></script>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.0/themes/base/jquery-ui.css" />
+
+	<style>
+#table-panel
+{
+	margin-left: auto;
+	margin-right: auto;
+	width: 500px;
+}
+
+#buttons-panel
+{
+	margin-left: auto;
+	margin-right: auto;
+}
+
+	</style>
+</head>
+
+<body>
+	<div id="login-panel" class="well">
+<% if (!loggedIn) 
+   { %>
+		<a href="javascript:doLogin()" id="login-link">Login</a><br />
+		<a href="javascript:doCreateNewLogin()" id="create-new-login-link">
+			Create new login</a>
+<% }
+   else
+   { %>
+		<span id="welcome-text">
+			Welcome, <%= login %></span><br />
+		<a href="/logout" id="logout-link">
+			Logout</a>
+<% } %>
+	</div>
+
+	<h2 class="text-center">Make your opinion known!</h2>
+
+	<div id="table-panel" class="well">
+		<table id="poll-table"></table>
+	</div>
+
+<% if (loggedIn)
+   { %>
+	<div id="buttons-panel" class="text-center">
+	<button id="show-polls-button" type="button" 
+		onclick="onShowPollsButton('<%= login %>')">Show only my polls</button>
+	<button id="create-new-poll-button" type="button"
+		onclick="onCreateNewPollButton('<%= login %>')">
+		Create new poll</button>
+	</div>
+<%
+   }
+%>
+	<div id="new-login-form" title="Create new login" style="display: none">
+		<p>All form fields are required:</p>
+		<form>
+			<table>
+				<tr>
+					<td>
+						<label for="login">Login name</label>
+					</td>
+					<td>
+						<input id="new-login-field" type="text" name="login" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="new-password-field">Password</label>
+					</td>
+					<td>
+						<input id="new-password-field" type="password" 
+							name="password" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="login-form" title="Login" style="display: none">
+		<p>Enter your credentials:</p>
+		<form>
+			<table>
+				<tr>
+					<td>
+						<label for="login">Login name</label>
+					</td>
+					<td>
+						<input id="login-field" type="text" name="login" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="password">Password</label>
+					</td>
+					<td>
+						<input id="password-field" type="password" 
+							name="password" />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+
+	<div id="new-poll-form" title="Create new poll" style="display: none">
+		<p>Create new poll by entering a poll name and two options.
+			Additional options can be added at the poll voting display.</p>
+		<form>
+			<input id="poll-owner-field" type="hidden" name="poll-owner" 
+				value="<%= login  %>" />
+			<table>
+				<tr>
+					<td>
+						<label for="poll-name">Poll name</label>
+					</td>
+					<td>
+						<input id="poll-name-field" type="text" 
+							name="poll-name" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="option-1">Option 1</label>
+					</td>
+					<td>
+						<input id="option-1-field" type="text" 
+							name="option-1" />
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<label for="option-2">Option 2</label>
+					</td>
+					<td>
+						<input id="option-2-field" type="text" 
+							name="option-2" /><br />
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+</body>
+</html>
